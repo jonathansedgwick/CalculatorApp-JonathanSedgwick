@@ -28,6 +28,7 @@ class SimpleScreen : AppCompatActivity() {
     lateinit var minusButton: Button
     lateinit var multiplyButton: Button
     lateinit var divideButton: Button
+    lateinit var plusMinusButton: Button
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,7 @@ class SimpleScreen : AppCompatActivity() {
         minusButton = findViewById(R.id.minus_button)
         multiplyButton = findViewById(R.id.multiply_button)
         divideButton = findViewById(R.id.divide_button)
+        plusMinusButton = findViewById(R.id.plus_minus_button)
         var firstNumber: Double = 0.0
         var secondNumber: Double = 0.0
         var functionNumber = 0
@@ -145,13 +147,23 @@ class SimpleScreen : AppCompatActivity() {
             numberText.text = ""
             functionNumber = 4
         }
+        plusMinusButton.setOnClickListener {
+            if (numberText.text.indexOf("-") == -1) {
+                var newText = "-" + numberText.text
+                numberText.text = newText
+            }
+            else
+                numberText.text = numberText.text.substring(1)
+
+        }
         equalsButton.setOnClickListener {
             if(functionNumber == 1) {
                 if (numberText.text.toString() == "")
                     secondNumber = 0.0
                 else
                     secondNumber = numberText.text.toString().toDouble()
-                numberText.text = (firstNumber + secondNumber).toString()
+                var result = (firstNumber + secondNumber).toString()
+                numberText.text = format(result)
                 functionNumber = 0
             }
             if(functionNumber == 2) {
@@ -159,7 +171,8 @@ class SimpleScreen : AppCompatActivity() {
                     secondNumber = 0.0
                 else
                     secondNumber = numberText.text.toString().toDouble()
-                numberText.text = (firstNumber - secondNumber).toString()
+                var result = (firstNumber - secondNumber).toString()
+                numberText.text = format(result)
                 functionNumber = 0
             }
             if(functionNumber == 3) {
@@ -167,7 +180,8 @@ class SimpleScreen : AppCompatActivity() {
                     secondNumber = 0.0
                 else
                     secondNumber = numberText.text.toString().toDouble()
-                numberText.text = (firstNumber * secondNumber).toString()
+                var result = (firstNumber * secondNumber).toString()
+                numberText.text = format(result)
                 functionNumber = 0
             }
             if(functionNumber == 4) {
@@ -175,12 +189,20 @@ class SimpleScreen : AppCompatActivity() {
                     secondNumber = 0.0
                 else
                     secondNumber = numberText.text.toString().toDouble()
-                numberText.text = (firstNumber / secondNumber).toString()
+                var result = (firstNumber / secondNumber).toString()
+                numberText.text = format(result)
                 functionNumber = 0
             }
 
         }
 
 
+    }
+
+    private fun format(a: String): String {
+        if(a.substring(a.length-2) == ".0")
+            return a.substring(0,a.length-2)
+        else
+            return a
     }
 }
