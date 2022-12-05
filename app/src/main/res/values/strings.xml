@@ -23,4 +23,6 @@
     <string name="times">x</string>
     <string name="divide">÷</string>
     <string name="plus_minus">-/+</string>
+    <string name="exponent">^</string>
+    <string name="history_text">History</string>
 </resources>

@@ -8,24 +8,25 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var simpleButton: Button
     lateinit var advancedButton: Button
+    lateinit var historyButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        simpleButton = findViewById(R.id.simple_button)
-        advancedButton = findViewById(R.id.advanced_button)
 
-        simpleButton.setOnClickListener{
-            Intent(this@MainActivity, SimpleScreen::class.java).also {
-                startActivity(it)
-            }
-        }
+        advancedButton = findViewById(R.id.advanced_button)
+        historyButton = findViewById(R.id.history_button)
+
 
         advancedButton.setOnClickListener {
             Intent(this@MainActivity, AdvancedScreen::class.java).also {
+                startActivity(it)
+            }
+        }
+        historyButton.setOnClickListener {
+            Intent(this@MainActivity, HistoryScreen::class.java).also {
                 startActivity(it)
             }
         }
