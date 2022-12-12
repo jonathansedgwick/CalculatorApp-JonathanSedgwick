@@ -1,7 +1,10 @@
 package com.example.calculator
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -63,6 +66,13 @@ class AdvancedScreen : AppCompatActivity() {
         var firstNumber: Double = 0.0
         var secondNumber: Double = 0.0
         var functionNumber = 0
+        var equation: String = ""
+
+        val SP = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+
+        val key1 = SP.getString("history", "")
+
+        val editor: SharedPreferences.Editor = SP.edit()
 
 
         AbackButton.setOnClickListener {
@@ -72,8 +82,10 @@ class AdvancedScreen : AppCompatActivity() {
         }
         historyScreenButton.setOnClickListener {
             Intent(this@AdvancedScreen, HistoryScreen::class.java).also {
+                it.putExtra("EQUATION", equation)
                 startActivity(it)
             }
+
         }
 
         AoneButton.setOnClickListener {
@@ -184,6 +196,9 @@ class AdvancedScreen : AppCompatActivity() {
                 var result = (firstNumber + secondNumber).toString()
                 AnumberText.text = format(result)
                 functionNumber = 0
+                equation += "${format(firstNumber.toString())} + ${format(secondNumber.toString())} = ${format(result)}\n"
+                editor.putString("history" , SP.getString("history", null) + equation)
+                editor.commit()
             }
             if(functionNumber == 2) {
                 if (AnumberText.text.toString() == "")
@@ -193,6 +208,9 @@ class AdvancedScreen : AppCompatActivity() {
                 var result = (firstNumber - secondNumber).toString()
                 AnumberText.text = format(result)
                 functionNumber = 0
+                equation += "${format(firstNumber.toString())} - ${format(secondNumber.toString())} = ${format(result)}\n"
+                editor.putString("history" , SP.getString("history", null) + equation)
+                editor.commit()
             }
             if(functionNumber == 3) {
                 if (AnumberText.text.toString() == "")
@@ -202,6 +220,9 @@ class AdvancedScreen : AppCompatActivity() {
                 var result = (firstNumber * secondNumber).toString()
                 AnumberText.text = format(result)
                 functionNumber = 0
+                equation += "${format(firstNumber.toString())} x ${format(secondNumber.toString())} = ${format(result)}\n"
+                editor.putString("history" , SP.getString("history", null) + equation)
+                editor.commit()
             }
             if(functionNumber == 4) {
                 if (AnumberText.text.toString() == "")
@@ -211,6 +232,9 @@ class AdvancedScreen : AppCompatActivity() {
                 var result = (firstNumber / secondNumber).toString()
                 AnumberText.text = format(result)
                 functionNumber = 0
+                equation += "${format(firstNumber.toString())} ÷ ${format(secondNumber.toString())} = ${format(result)}\n"
+                editor.putString("history" , SP.getString("history", null) + equation)
+                editor.commit()
             }
             if(functionNumber == 5) {
                 if (AnumberText.text.toString() == "")
@@ -220,6 +244,9 @@ class AdvancedScreen : AppCompatActivity() {
                 var result = (firstNumber.pow(secondNumber)).toString()
                 AnumberText.text = format(result)
                 functionNumber = 0
+                equation += "${format(firstNumber.toString())} ^ ${format(secondNumber.toString())} = ${format(result)}\n"
+                editor.putString("history" , SP.getString("history", null) + equation)
+                editor.commit()
             }
 
         }
@@ -233,4 +260,6 @@ class AdvancedScreen : AppCompatActivity() {
         else
             return a
     }
+
+
 }

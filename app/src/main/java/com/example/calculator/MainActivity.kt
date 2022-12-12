@@ -2,6 +2,7 @@ package com.example.calculator
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -30,6 +31,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+        val SP = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+
+        val key1 = SP.getString("history", "")
+
+        val editor: SharedPreferences.Editor = SP.edit()
+
 
     }
 }
