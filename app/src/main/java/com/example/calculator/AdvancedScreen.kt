@@ -35,6 +35,7 @@ class AdvancedScreen : AppCompatActivity() {
     lateinit var AplusMinusButton: Button
     lateinit var exponentButton: Button
     lateinit var historyScreenButton: Button
+    lateinit var factorialButton: Button
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +64,7 @@ class AdvancedScreen : AppCompatActivity() {
         AplusMinusButton = findViewById(R.id.advanced_plus_minus_button)
         exponentButton = findViewById(R.id.exponent_button)
         historyScreenButton = findViewById(R.id.history_screen_button)
+        factorialButton = findViewById(R.id.factorial_button)
         var firstNumber: Double = 0.0
         var secondNumber: Double = 0.0
         var functionNumber = 0
@@ -73,7 +75,7 @@ class AdvancedScreen : AppCompatActivity() {
         val key1 = SP.getString("history", "")
 
         val editor: SharedPreferences.Editor = SP.edit()
-
+        var history = SP.getString("history", "")
 
         AbackButton.setOnClickListener {
             Intent(this@AdvancedScreen, MainActivity::class.java).also {
@@ -83,6 +85,9 @@ class AdvancedScreen : AppCompatActivity() {
         historyScreenButton.setOnClickListener {
             Intent(this@AdvancedScreen, HistoryScreen::class.java).also {
                 it.putExtra("EQUATION", equation)
+
+                editor.putString("history" , history + equation)
+                editor.apply()
                 startActivity(it)
             }
 
@@ -178,6 +183,14 @@ class AdvancedScreen : AppCompatActivity() {
             AnumberText.text = ""
             functionNumber = 5
         }
+//        factorialButton.setOnClickListener {
+//            if (AnumberText.text.toString() == "")
+//                firstNumber = 0.0
+//            else
+//                firstNumber = AnumberText.text.toString().toDouble()
+//            AnumberText.text = ""
+//            functionNumber = 6
+//        }
         AplusMinusButton.setOnClickListener {
             if (AnumberText.text.indexOf("-") == -1) {
                 var newText = "-" + AnumberText.text
@@ -197,8 +210,7 @@ class AdvancedScreen : AppCompatActivity() {
                 AnumberText.text = format(result)
                 functionNumber = 0
                 equation += "${format(firstNumber.toString())} + ${format(secondNumber.toString())} = ${format(result)}\n"
-                editor.putString("history" , SP.getString("history", null) + equation)
-                editor.commit()
+
             }
             if(functionNumber == 2) {
                 if (AnumberText.text.toString() == "")
@@ -209,8 +221,8 @@ class AdvancedScreen : AppCompatActivity() {
                 AnumberText.text = format(result)
                 functionNumber = 0
                 equation += "${format(firstNumber.toString())} - ${format(secondNumber.toString())} = ${format(result)}\n"
-                editor.putString("history" , SP.getString("history", null) + equation)
-                editor.commit()
+
+
             }
             if(functionNumber == 3) {
                 if (AnumberText.text.toString() == "")
@@ -221,8 +233,8 @@ class AdvancedScreen : AppCompatActivity() {
                 AnumberText.text = format(result)
                 functionNumber = 0
                 equation += "${format(firstNumber.toString())} x ${format(secondNumber.toString())} = ${format(result)}\n"
-                editor.putString("history" , SP.getString("history", null) + equation)
-                editor.commit()
+
+
             }
             if(functionNumber == 4) {
                 if (AnumberText.text.toString() == "")
@@ -233,8 +245,8 @@ class AdvancedScreen : AppCompatActivity() {
                 AnumberText.text = format(result)
                 functionNumber = 0
                 equation += "${format(firstNumber.toString())} ÷ ${format(secondNumber.toString())} = ${format(result)}\n"
-                editor.putString("history" , SP.getString("history", null) + equation)
-                editor.commit()
+
+
             }
             if(functionNumber == 5) {
                 if (AnumberText.text.toString() == "")
@@ -245,9 +257,21 @@ class AdvancedScreen : AppCompatActivity() {
                 AnumberText.text = format(result)
                 functionNumber = 0
                 equation += "${format(firstNumber.toString())} ^ ${format(secondNumber.toString())} = ${format(result)}\n"
-                editor.putString("history" , SP.getString("history", null) + equation)
-                editor.commit()
+
             }
+//            if(functionNumber == 6){
+//                if (AnumberText.text.toString() == "")
+//                    secondNumber = 0.0
+//                else
+//                    secondNumber = AnumberText.text.toString().toDouble()
+//
+//
+//
+//                AnumberText.text = format(result)
+//                functionNumber = 0
+//                equation += "${format(firstNumber.toString())} ^ ${format(secondNumber.toString())} = ${format(result)}\n"
+//
+//            }
 
         }
 

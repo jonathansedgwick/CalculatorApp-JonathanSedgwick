@@ -27,4 +27,5 @@
     <string name="history_text">History</string>
     <string name="history_string" />
     <string name="clear">Clear</string>
+    <string name="factorial">!</string>
 </resources>
